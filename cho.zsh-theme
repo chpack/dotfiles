@@ -1,11 +1,16 @@
-# user, host, full path, and time/date
-# on two lines for easier vgrepping
-# entry in a nice long thread on the Arch Linux forums: https://bbs.archlinux.org/viewtopic.php?pid=521888#p521888
-#PROMPT=$'%{\e[0;34m%}%B%b%{\e[0m%}%{\e[1;32m%}%n%{\e[1;34m%} %b%{\e[0;34m%}%B%~%{\e[0;34m%}%B $(git_prompt_info)%(!.#.$) 
-#%{\e[0;34m%}%B%?%B[%{\e[1;35m%}$%{\e[0;34m%}%B%{\e[0m%}%b '
-PROMPT=$'%{\e[0;34m%}%B- %{\e[0m%}%{\e[1;32m%}%n%{\e[1;34m%} %b%{\e[0;34m%}%B%~%{\e[0;34m%}%B
-%? %{\e[1;35m%}$%{\e[0;34m%}%B%{\e[0m%}%b '
-RPROMPT='[%*]'
+
+CL=$'%{\e[0m%}'
+
+UN=$'%{\e[38;5;103m%}'
+P=$'%{\e[38;5;37m%}'
+S=$'%{\e[48;5;40m\e[38;5;232m%}'
+F=$'%{\e[48;5;160m\e[38;5;20m%}'
+T=$'%{\e[38;5;240m%}'
+N=$'%{\e[38;5;39m%}'
+
+
+PROMPT='%(?.'$S'.'$F')%?'$CL' $(git_prompt_info)'$P$'%~\n'$CL$N'%B->%b'$CL
+RPROMPT=$UN'<%n @ %M'$$T' %*'
 PS2=$' \e[0;34m%}%B>%{\e[0m%}%b '
 
 # git theming
