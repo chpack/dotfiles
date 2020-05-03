@@ -116,6 +116,7 @@ inoremap <silent><expr> <TAB>
 		  \ pumvisible() ? "\<C-n>" :
 		  \ <SID>check_back_space() ? "\<TAB>" :
 		  \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 nmap <leader>es <Plug>(coc-diagnostic-info) 
 "			显示当前位置下的错误信息，没有截断。
@@ -163,7 +164,7 @@ nmap <leader>f <Plug>(coc-format)
 nmap <leader>rn <Plug>(coc-rename) 
 "			重命名光标所在位置符号。
 "
-nmap <leader>a <Plug>(coc-codeaction) 
+nmap <leader>ef <Plug>(coc-codeaction) 
 "			获取并执行 language server 给出的当前缓冲区的
 "			可用操作。
 "
@@ -179,7 +180,7 @@ nmap <leader>cl <Plug>(coc-codelens-action)
 "			需要设置 `"codeLens.enable":true` 开启 codeLens
 "			支持，该功能需要 neovim 支持 virtual text 特性。
 "
-nmap <leader>fj <Plug>(coc-fix-current) 
+nmap <leader>a <Plug>(coc-fix-current) 
 "			修复当前行可修复的第一个错误修复操作。
 "
 nmap <leader>wh <Plug>(coc-float-hide) 
@@ -207,3 +208,8 @@ nmap <leader>rf <Plug>(coc-refactor)
 "nmap <leader> <Plug>(coc-funcobj-a) 
 "			选择当前函数所在区间，默认映射到 `af`。
 "
+"
+nmap <leader>la :CocList -A --normal outline<CR>
+nmap <leader>ll :CocList -A outline<CR>
+nmap <leader>lq :CocList -A --normal actions<CR>
+nmap <leader>ls :CocList -A --normal diagnostics<CR>
