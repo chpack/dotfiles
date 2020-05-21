@@ -213,3 +213,6 @@ nmap <leader>la :CocList -A --normal outline<CR>
 nmap <leader>ll :CocList -A outline<CR>
 nmap <leader>lq :CocList -A --normal actions<CR>
 nmap <leader>ls :CocList -A --normal diagnostics<CR>
+
+let g:html_dynamic_folds = 1
+set foldmethod=syntax
