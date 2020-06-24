@@ -216,3 +216,4 @@ nmap <leader>ls :CocList -A --normal diagnostics<CR>
 
 let g:html_dynamic_folds = 1
 set foldmethod=syntax
+set foldlevel=10
