@@ -4,6 +4,11 @@
 # Path to your oh-my-zsh installation.
   export ZSH="$HOME/.oh-my-zsh"
   export PATH=$PATH":$HOME/.bin"
+  export PATH=$PATH":$HOME/c/go/ogo/go/bin"
+  export PATH=$PATH":$HOME/go/bin"
+
+bindkey -v
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -68,6 +73,7 @@ plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
+  vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -107,6 +113,7 @@ alias ta='tmux -2 a || tmux -2'
 alias py3='python3'
 alias py2='python2'
 alias nw='tmux neww '
+alias ra='ranger'
 
 if [ -z $TMUX ]
 then
