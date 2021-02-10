@@ -2,13 +2,15 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="$HOME/.oh-my-zsh"
-  export PATH=$PATH":$HOME/.bin"
-  export PATH=$PATH":$HOME/c/go/ogo/go/bin"
-  export PATH=$PATH":$HOME/go/bin"
+export ZSH="$HOME/.oh-my-zsh"
+export PATH=$PATH":$HOME/c/go/ogo/go/bin"
+export PATH=$PATH":$HOME/go/bin"
+export PATH=$PATH":$HOME/.local/bin"
+export PATH=$PATH":/opt/anaconda/bin"
+export PATH=$PATH":$HOME/.dotnet/tools"
+export LANG=en_US.UTF-8
 
 bindkey -v
-
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -78,6 +80,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -89,7 +92,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -106,20 +109,36 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim='nvim'
 alias v='nvim'
-# alias t='tmux -2'
+alias t='tmux -2'
 alias ta='tmux -2 a || tmux -2'
+#alias ta='tmux -2'
 alias py3='python3'
 alias py2='python2'
 alias nw='tmux neww '
 alias ra='ranger'
+alias ip='ip -c'
+alias less='less --mouse --wheel-lines=3'
+alias man="man --pager='less --mouse --wheel-lines=3'"
+alias inconda='source /opt/anaconda/bin/activate root'
+alias outconda='source /opt/anaconda/bin/deactivate root'
+
+  
 
 if [ -z $TMUX ]
 then
-    ta
+    t -u
 #else
     #echo "alread in tmux"
 fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+[[ -s /home/ch/.autojump/etc/profile.d/autojump.sh ]] && source /home/ch/.autojump/etc/profile.d/autojump.sh
+
+#!/bin/sh
+#_CONDA_ROOT="/opt/anaconda"
+## Copyright (C) 2012 Anaconda, Inc
+## SPDX-License-Identifier: BSD-3-Clause
+#\. "$_CONDA_ROOT/etc/profile.d/conda.sh" || return $?
+#conda activate "$@"
