@@ -1,25 +1,34 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-"Plug 'Valloric/YouCompleteMe'
+
 Plug 'neoclide/coc.nvim', {'branch':'release'}
+
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
-"Plug 'puremourning/vimspector'
+"Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+
 "Plug 'neoclide/coc-python'
 "Plug 'neoclide/coc-lists'
 "Plug 'neoclide/coc-git'
 "Plug 'neoclide/coc-highlight'
-Plug 'liuchengxu/space-vim-dark' 
+"
 "Plug 'lervag/vimtex' 
+"
 Plug 'jiangmiao/auto-pairs' 
-Plug 'justinmk/vim-sneak'
-Plug 'haya14busa/incsearch.vim'
-Plug 'mhinz/vim-signify'
+"Plug 'justinmk/vim-sneak'
+"Plug 'haya14busa/incsearch.vim'
+"Plug 'mhinz/vim-signify'
 "Plug 'airblade/vim-gitgutter'
+"
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 "Plug 'OmniSharp/omnisharp-vim'
 "Plug 'jeaye/color_coded'
-"Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+"
+"Plug 'liuchengxu/space-vim-dark' 
+"
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+Plug 'nvim-treesitter/nvim-treesitter'
 "
 
 call plug#end()
@@ -65,6 +74,7 @@ set cursorline
 set nowrap
 
 colorscheme space-vim-dark
+"colorscheme gruvbox
 
 highlight CursorLine   cterm=NONE ctermbg=235
 highlight CursorColumn ctermbg=235
@@ -76,11 +86,11 @@ hi SignColumn ctermbg=NONE
 
 
 "let g:ycm_extra_conf_globlist = ['~/.config/nvim/*']
-let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
-let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
+"let g:ycm_autoclose_preview_window_after_completion = 1
 set inccommand=split
 
-inoremap <c-h> <c-space>
+"inoremap <c-h> <c-space>
 
 let mapleader = ","
 
@@ -102,7 +112,7 @@ set updatetime=100
 
 set shortmess+=c
 
-"set signcolumn=number
+set signcolumn=number
 
 " use tab
 inoremap <silent><expr> <TAB>
@@ -131,11 +141,13 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <leader>h :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
 endfunction
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -144,8 +156,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>f  <Plug>(coc-format)
+nmap <leader>f  <Plug>(coc-format)
 
 augroup mygroup
     autocmd!
@@ -157,8 +169,13 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>a  <Plug>(coc-codeaction-line)
+nmap <leader>a  <Plug>(coc-codeaction-line)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader><tab> <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -177,113 +194,28 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-" use <tab>
-"function! s:check_back_space() abort
-"    let col = col('.')-1
-"    return !col || getline('.')[col-1]=~ '\s'
-"endfunction
-"
-"inoremap <silent><expr> <TAB>
-"		  \ pumvisible() ? "\<C-n>" :
-"		  \ <SID>check_back_space() ? "\<TAB>" :
-"		  \ coc#refresh()
-"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-"
-"nmap <leader>es <Plug>(coc-diagnostic-info) 
-""			显示当前位置下的错误信息，没有截断。
-""
-"nmap <leader>ej <Plug>(coc-diagnostic-next) 
-""			跳转到下一个错误处。
-""
-"nmap <leader>ek <Plug>(coc-diagnostic-prev) 
-""			跳转到上一个错误处。
-""
-"nmap <leader>el <Plug>(coc-diagnostic-next-error) 
-""			跳转到下一个错误处.
-""
-"nmap <leader>eh <Plug>(coc-diagnostic-prev-error) 
-""			跳转到上一个错误处.
-""
-"nmap <leader>jf <Plug>(coc-definition) 
-""			跳转到定义位置。
-""
-"nmap <leader>jc <Plug>(coc-declaration) 
-""			跳转到声明位置。
-""
-"nmap <leader>ji <Plug>(coc-implementation) 
-""			跳转到实现位置。
-""
-"nmap <leader>jt <Plug>(coc-type-definition) 
-""			跳转到类型定义位置。
-""
-"nmap <leader>jr <Plug>(coc-references) 
-""			跳转到引用位置。
-""
-"nmap <leader>fs <Plug>(coc-format-selected) 
-"nmap <leader>fs <Plug>(coc-format-selected) 
-""			格式化选中区间，可在正常和可视模式下工作。
-""			正常模式下时作用于 motion 对象。
-""	例如: >
-""	vmap <leader>p  nmap <leader> <Plug>(coc-format-selected)
-""	nmap <leader>p  nmap <leader> <Plug>(coc-format-selected)
-""	表示使用 `<leader>p` 格式化选中区间，使用 `<leader>pap` 格式化
-""	当前段落。
-""
-"nmap <leader>f <Plug>(coc-format) 
-""			格式化当前 buffer。
-""
-"nmap <leader>rn <Plug>(coc-rename) 
-""			重命名光标所在位置符号。
-""
-"nmap <leader>ef <Plug>(coc-codeaction) 
-""			获取并执行 language server 给出的当前缓冲区的
-""			可用操作。
-""
-""nmap <leader> <Plug>(coc-codeaction-selected) 
-""			获取并执行 language server 给出的当前选择区间
-""			内的可用操作。
-""nmap <leader> <Plug>(coc-openlink) 
-""			打开鼠标位置下的链接。
-""
-"nmap <leader>cl <Plug>(coc-codelens-action) 
-""			执行 codelens 给出的动作。
-""
-""			需要设置 `"codeLens.enable":true` 开启 codeLens
-""			支持，该功能需要 neovim 支持 virtual text 特性。
-""
-"nmap <leader>a <Plug>(coc-fix-current) 
-""			修复当前行可修复的第一个错误修复操作。
-""
-"nmap <leader>wh <Plug>(coc-float-hide) 
-""			隐藏所有浮动窗口。
-""
-"nmap <leader>wf <Plug>(coc-float-jump) 
-""			跳转到第一个浮动窗口。
-""
-"nmap <leader>rf <Plug>(coc-refactor) 
-""			打开重构窗口，用于重构当前函数或重命名。
-""
-""nmap <leader>sj <Plug>(coc-range-select) 
-""nmap <leader> <Plug>(coc-range-select) 
-""
-""			选择下一个可选区域。
-""
-""			注意：仅部分语言服务支持。
-""
-""nmap <leader>sk <Plug>(coc-range-select-backward) 
-""			选择上一个可选区域。
-""			注意：仅部分语言服务支持。
-""nmap <leader> <Plug>(coc-funcobj-i) 
-""			选择函数内所有行，默认映射到 `if` 。
-""			例如：使用 `cif` 重写当前函数。
-""nmap <leader> <Plug>(coc-funcobj-a) 
-""			选择当前函数所在区间，默认映射到 `af`。
-""
-""
-"nmap <leader>la :CocList -A --normal outline<CR>
-"nmap <leader>ll :CocList -A outline<CR>
-"nmap <leader>lq :CocList -A --normal actions<CR>
-"nmap <leader>ls :CocList -A --normal diagnostics<CR>
+nnoremap <silent><nowait> <space>f  :CocCommand explorer<CR>
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
 let g:html_dynamic_folds = 1
 set foldmethod=syntax
@@ -292,3 +224,43 @@ set foldlevel=10
 let g:coc_disable_startup_warning = 1
 
 set mouse=a
+
+lua <<EOF
+  require'nvim-treesitter.configs'.setup {
+    --ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    highlight = {
+      enable = true,              -- false will disable the whole extension
+      --disable = { "c", "rust" },  -- list of language that will be disabled
+    },
+  }
+EOF
+
+lua <<EOF
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.cpp = {
+  install_info = {
+    url = "/home/ch/op/tree-sitter/tree-sitter-cpp", -- local path or git repo
+    files = {"src/parser.c","src/scanner.cc"}
+  },
+  filetype = "cpp", -- if filetype does not agrees with parser name
+  used_by = {"bar", "baz","cpp"} -- additional filetypes that use this parser
+}
+EOF
+
+"let g:nvcode_termcolors=256
+
+
+colorscheme nvcode " Or whatever colorscheme you make
+
+
+" checks if your terminal has 24-bit color support
+if (has("termguicolors"))
+    set termguicolors
+    "hi LineNr ctermbg=NONE guibg=NONE
+endif
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+
+nnoremap <leader>t :hi Normal guibg=1<cr>
+nnoremap <leader>T :hi Normal guibg=#1e1e1e<cr>
