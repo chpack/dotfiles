@@ -1,5 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+#
+
+export VIMP="/home/ch/op/nvim/ins/bin/nvim"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -8,6 +11,8 @@ export PATH=$PATH":$HOME/go/bin"
 export PATH=$PATH":$HOME/.local/bin"
 export PATH=$PATH":/opt/anaconda/bin"
 export PATH=$PATH":$HOME/.dotnet/tools"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 export LANG=en_US.UTF-8
 
 bindkey -v
@@ -92,7 +97,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-export EDITOR='nvim'
+export EDITOR=$VIMP
 # fi
 
 # Compilation flags
@@ -109,7 +114,8 @@ export EDITOR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias v='nvim'
+#alias v='nvim'
+alias v=$VIMP
 alias t='tmux -2'
 alias ta='tmux -2 a || tmux -2'
 #alias ta='tmux -2'
@@ -132,7 +138,6 @@ then
     #echo "alread in tmux"
 fi
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 [[ -s /home/ch/.autojump/etc/profile.d/autojump.sh ]] && source /home/ch/.autojump/etc/profile.d/autojump.sh
 

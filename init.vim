@@ -3,6 +3,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 "Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 
@@ -73,7 +75,7 @@ set cursorcolumn
 set cursorline
 set nowrap
 
-colorscheme space-vim-dark
+"colorscheme space-vim-dark
 "colorscheme gruvbox
 
 highlight CursorLine   cterm=NONE ctermbg=235
@@ -264,3 +266,5 @@ set foldexpr=nvim_treesitter#foldexpr()
 
 nnoremap <leader>t :hi Normal guibg=1<cr>
 nnoremap <leader>T :hi Normal guibg=#1e1e1e<cr>
+
+set relativenumber
