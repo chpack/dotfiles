@@ -2,13 +2,15 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 #
 
-export VIMP="/home/ch/op/nvim/ins/bin/nvim"
+#export VIMP="/home/ch/op/nvim/ins/bin/nvim"
+export VIMP="nvim"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH":$HOME/c/go/ogo/go/bin"
 export PATH=$PATH":$HOME/go/bin"
 export PATH=$PATH":$HOME/.local/bin"
+export PATH=$PATH":$HOME/.cargo/bin"
 export PATH=$PATH":/opt/anaconda/bin"
 export PATH=$PATH":$HOME/.dotnet/tools"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -66,7 +68,9 @@ ZSH_THEME="cho"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
+HISTSIZE=100000
+SAVEHIST=100000
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
